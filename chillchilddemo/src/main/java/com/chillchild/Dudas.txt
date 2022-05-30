@@ -1,0 +1,9 @@
+1.- Cómo inseto un JLabel encima del Graphics2D? Para hacer un menú de pausa, quitar sonidos, etc.
+2.- Debería hacer el cambio de mapas en otra clase diferente al player y llamarlo desde el mismo?
+3.- Debería hacer una clase sólo para los sprites/imagenes y llamar a todo desde las clases donde lo necesite?
+4.- La intro (en Game) debería estar en otra clase?
+5.- Tiene demasiados parámetros el constructor de Animation? Está modificado para que devuelva el sprite hecho.
+6.- Debería hacer diferentes tipos de frames para los objetos que quiero recortar? O simplemente hacer que el 
+tamaño de lo que quiero recortar sea un parámetro de frame?
+7.- Debería hacer una interfaz y/o una clase padre para Player y Enemy y poner en el mismo las propiedades/funciones 
+en común o como son muy diferentes (o al menos eso tengo pensado), dejarlos por separado?
