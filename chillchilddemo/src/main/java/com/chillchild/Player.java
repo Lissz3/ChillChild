@@ -32,18 +32,20 @@ public class Player extends JPanel implements ActionListener {
 	int yv = 0;
 	int x;
 	int y;
-	Image map = new ImageIcon(Game.class.getResource("/Resources/Levels/preview.png")).getImage();
+	Image map = new ImageIcon(Game.class.getResource("/Resources/Levels/map1.png")).getImage();
 
 	KbHandler kh;
 
-	int limitX;
-	int limitY;
+	int mapX;
+	int mapY;
+
+	String moving;
 
 	public Player(Game g) {
-		limitX = 0;
-		limitY = 0;
-		x = 170;
-		y = 150;
+		mapX = 0;
+		mapY = 0;
+		x = 180;
+		y = 180;
 		this.setSize(g.getWidth(), g.getHeight());
 		this.setBackground(Color.DARK_GRAY);
 		timer = new Timer(25, this);
@@ -70,24 +72,28 @@ public class Player extends JPanel implements ActionListener {
 			if (e.getKeyCode() == KeyEvent.VK_A) {
 				animation = walkLeft;
 				animation.start();
-				xv = -2;
+				moving = "A";
 			} else if (e.getKeyCode() == KeyEvent.VK_D) {
 				animation = walkRight;
 				animation.start();
 				xv = 2;
+				moving = "D";
 			} else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 				animation = shooting;
 				animation.start();
 				xv = 0;
 				yv = 0;
+				moving = "STD";
 			} else if (e.getKeyCode() == KeyEvent.VK_W) {
 				animation = walkForward;
 				animation.start();
 				yv = -2;
+				moving = "W";
 			} else if (e.getKeyCode() == KeyEvent.VK_S) {
 				animation = walkBack;
 				animation.start();
 				yv = 2;
+				moving = "S";
 			}
 		}
 
@@ -97,6 +103,7 @@ public class Player extends JPanel implements ActionListener {
 			} else if (e.getKeyCode() == 87 || e.getKeyCode() == 83) {
 				yv = 0;
 			}
+			animation.restart();
 			animation.stop();
 		}
 
@@ -107,32 +114,59 @@ public class Player extends JPanel implements ActionListener {
 		animation.update();
 		repaint();
 		move();
-		if (y > 470 && limitY != 2) {
-			if (limitY == 0) {
-				map = new ImageIcon(Game.class.getResource("/Resources/Levels/preview2.png")).getImage();
-				y = 0;
-				limitY++;
-			} else {
-				map = new ImageIcon(Game.class.getResource("/Resources/Levels/preview3.png")).getImage();
-				y = 0;
-				limitY++;
-			}
-		} else if (y < 0 && limitY != 0) {
-			if (limitY == 1) {
-				map = new ImageIcon(Game.class.getResource("/Resources/Levels/preview.png")).getImage();
-				y = 470;
-				limitY--;
-			} else {
-				map = new ImageIcon(Game.class.getResource("/Resources/Levels/preview2.png")).getImage();
-				y = 470;
-				limitY--;
-			}
-		}
+		changeMap();
+
+		System.err.println(notEdge());
 	}
 
 	private void move() {
-		x = x + xv;
-		y = y + yv;
+		if (notEdge()){
+			x = x + xv;
+			y = y + yv;
+		}
+	}
+
+	private void changeMap() {
+		if (x > 1380 && mapX == 0 && mapY == 0) {
+			map = new ImageIcon(Game.class.getResource("/Resources/Levels/map2.png")).getImage();
+			x = 0;
+			mapX++;
+		} else if (x < -10 && mapX == 1 && mapY == 0) {
+			map = new ImageIcon(Game.class.getResource("/Resources/Levels/map1.png")).getImage();
+			x = 1380;
+			mapX--;
+		} else if (x > 1380 && mapX == 0 && mapY == 1) {
+			map = new ImageIcon(Game.class.getResource("/Resources/Levels/map4.png")).getImage();
+			x = 0;
+			mapX++;
+		} else if (x < -10 && mapX == 1 && mapY == 1) {
+			map = new ImageIcon(Game.class.getResource("/Resources/Levels/map3.png")).getImage();
+			x = 1380;
+			mapX--;
+		} else if (y > 695 && mapY == 0 && mapX == 0) {
+			map = new ImageIcon(Game.class.getResource("/Resources/Levels/map3.png")).getImage();
+			y = 0;
+			mapY++;
+		} else if (y < -10 && mapY == 1 && mapX == 0) {
+			map = new ImageIcon(Game.class.getResource("/Resources/Levels/map1.png")).getImage();
+			y = 685;
+			mapY--;
+		} else if (y > 695 && mapY == 0 && mapX == 1) {
+			map = new ImageIcon(Game.class.getResource("/Resources/Levels/map4.png")).getImage();
+			y = 0;
+			mapY++;
+		} else if (y < -10 && mapY == 1 && mapX == 1) {
+			map = new ImageIcon(Game.class.getResource("/Resources/Levels/map3.png")).getImage();
+			y = 685;
+			mapY--;
+		}
+	}
+
+	private boolean notEdge() {
+		if (mapX == 0 && mapY == 0 && this.x < 160 && moving.equals("A")){
+			return false;
+		}
+		return true;
 	}
 
 }

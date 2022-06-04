@@ -29,7 +29,7 @@ public class Game extends JFrame {
 	public Game() {
 		super("Chill, child");
 		setLayout(null);
-		setSize(960, 540);
+		setSize(1440, 800);
 
 		ImageIcon starting = new ImageIcon(Game.class.getResource("/Resources/StartingScreen/starting.gif"));
 		this.setContentPane(new JLabel(starting));
